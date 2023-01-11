@@ -1,0 +1,27 @@
+.f-cc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.f-bc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.f-bs {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.fc-cc {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.fc-sc {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
