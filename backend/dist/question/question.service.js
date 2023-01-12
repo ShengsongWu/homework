@@ -27,6 +27,9 @@ let QuestionService = class QuestionService {
     findOne(id) {
         return this.questionRepository.findOneBy({ id });
     }
+    findAllByform(formId) {
+        return this.questionRepository.findBy({ form: { id: formId } });
+    }
     async remove(id) {
         await this.questionRepository.delete(id);
     }

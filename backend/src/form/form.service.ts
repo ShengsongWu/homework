@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
-import { FormDto } from './form.dto';
-import { Form } from './form.entity';
-import { QuestionService } from 'src/question/question.service';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { DataSource, Repository } from "typeorm";
+import { FormDto } from "./form.dto";
+import { Form } from "./form.entity";
+import { QuestionService } from "src/question/question.service";
+import { PageResult } from "src/common";
 
 @Injectable()
 export class FormService {
@@ -11,20 +12,28 @@ export class FormService {
     @InjectRepository(Form)
     private formRepository: Repository<Form>,
     private questionService: QuestionService,
-    private dataSource: DataSource,
+    private dataSource: DataSource
   ) {}
 
   findAll(): Promise<Form[]> {
     return this.formRepository.find();
   }
 
-  findByPage(page: number, pageSize: number): Promise<Form[]> {
-    return this.formRepository
-      .createQueryBuilder('f')
-      .orderBy('f.id')
+  async findByPage(
+    page: number,
+    pageSize: number
+  ): Promise<PageResult<Form[]>> {
+    const result = await this.formRepository
+      .createQueryBuilder("f")
+      .orderBy("f.id", "DESC")
       .skip((page - 1) * pageSize)
       .take(pageSize)
       .getMany();
+    const total = await this.formRepository.count();
+    return {
+      data: result,
+      total,
+    };
   }
 
   findOne(id: number): Promise<Form> {

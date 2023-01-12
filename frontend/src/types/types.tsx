@@ -1,12 +1,12 @@
-export type QuestionMode = 'view' | 'edit';
+export type QuestionMode = "view" | "edit";
 
-export type QuestionType = 'checkbox' | 'radio' | 'multiDropdown';
+export type QuestionType = "checkbox" | "radio" | "multiDropdown";
 
-export type OperatorType = 'eq' | 'in';
+export type OperatorType = "eq" | "in";
 
-export type VisibleType = 'always' | 'conditional';
+export type VisibleType = "always" | "conditional";
 
-export type CheckboxType = 'checked' | 'unchecked';
+export type CheckboxType = "checked" | "unchecked";
 
 export interface IForm {
   id: number;
@@ -27,4 +27,11 @@ export interface IVisibility {
   questionIndex: number;
   operatorType: OperatorType;
   selectedOptions?: string[];
+}
+
+export interface UniformResponse<T> {
+  statusCode?: number;
+  message?: string;
+  error?: string;
+  data?: T;
 }

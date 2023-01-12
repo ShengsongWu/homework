@@ -14,33 +14,49 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FormController = void 0;
 const common_1 = require("@nestjs/common");
+const common_2 = require("../common");
 const form_dto_1 = require("./form.dto");
 const form_service_1 = require("./form.service");
 let FormController = class FormController {
     constructor(formService) {
         this.formService = formService;
     }
-    list(page, size) {
-        return this.formService.findByPage(page, size);
+    async list(page, size) {
+        const result = await this.formService.findByPage(page, size);
+        return (0, common_2.success)(result);
     }
-    create(createFormDto) {
-        return this.formService.create(createFormDto);
+    async getOne(id) {
+        const result = await this.formService.findOne(id);
+        return (0, common_2.success)(result);
     }
-    edit(editFormDto) {
-        return this.formService.edit(editFormDto);
+    async create(createFormDto) {
+        await this.formService.create(createFormDto);
+        return (0, common_2.success)();
     }
-    delete(id) {
-        return this.formService.remove(id);
+    async edit(editFormDto) {
+        await this.formService.edit(editFormDto);
+        return (0, common_2.success)();
+    }
+    async delete(id) {
+        await this.formService.remove(id);
+        return (0, common_2.success)();
     }
 };
 __decorate([
-    (0, common_1.Get)(':page/:size'),
-    __param(0, (0, common_1.Param)('page')),
-    __param(1, (0, common_1.Param)('size')),
+    (0, common_1.Get)("page/:page/:size"),
+    __param(0, (0, common_1.Param)("page")),
+    __param(1, (0, common_1.Param)("size")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", Promise)
 ], FormController.prototype, "list", null);
+__decorate([
+    (0, common_1.Get)(":id"),
+    __param(0, (0, common_1.Param)("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], FormController.prototype, "getOne", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
@@ -56,14 +72,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], FormController.prototype, "edit", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], FormController.prototype, "delete", null);
 FormController = __decorate([
-    (0, common_1.Controller)('form'),
+    (0, common_1.Controller)("form"),
     __metadata("design:paramtypes", [form_service_1.FormService])
 ], FormController);
 exports.FormController = FormController;

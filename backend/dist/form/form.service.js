@@ -27,13 +27,18 @@ let FormService = class FormService {
     findAll() {
         return this.formRepository.find();
     }
-    findByPage(page, pageSize) {
-        return this.formRepository
-            .createQueryBuilder('f')
-            .orderBy('f.id')
+    async findByPage(page, pageSize) {
+        const result = await this.formRepository
+            .createQueryBuilder("f")
+            .orderBy("f.id", "DESC")
             .skip((page - 1) * pageSize)
             .take(pageSize)
             .getMany();
+        const total = await this.formRepository.count();
+        return {
+            data: result,
+            total,
+        };
     }
     findOne(id) {
         return this.formRepository.findOneBy({ id });

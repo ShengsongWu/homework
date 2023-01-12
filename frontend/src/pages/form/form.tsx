@@ -1,33 +1,37 @@
-import React, { FC, useState, useEffect } from 'react';
-import { Button, Spin, Form as AntForm } from 'antd';
-import { Layout } from '@/components/layout';
-import { useParams } from 'react-router-dom';
-import { getOneForm } from '@/store';
-import { IForm, IQuestion } from '@/types';
-import style from './form.module.scss';
-import { arrayContain, classNames } from '@/utils';
-import { Question } from '@/components/question';
+import React, { FC, useState, useEffect } from "react";
+import { Button, Spin, Form as AntForm } from "antd";
+import { Layout } from "@/components/layout";
+import { useParams } from "react-router-dom";
+import { getOneForm, getQuestions } from "@/store";
+import { IForm, IQuestion } from "@/types";
+import style from "./form.module.scss";
+import { arrayContain, classNames } from "@/utils";
+import { Question } from "@/components/question";
 
 export const Form: FC = () => {
   const { id } = useParams();
   const [form, setForm] = useState<IForm>();
   const [loading, setLoading] = useState(false);
-  const [values, setValues] = useState<string[][]>(form?.questions?.map((x) => []) ?? []);
+  const [values, setValues] = useState<string[][]>(
+    form?.questions?.map((x) => []) ?? []
+  );
   const [visibilities, setVisibilities] = useState<boolean[]>(
     form?.questions?.map((x) => true) ?? []
   );
   const antForm = AntForm.useForm()[0];
 
-  const loadData = () => {
+  const loadData = async () => {
     setLoading(true);
-    getOneForm(parseInt(id ?? '')).then((data) => {
+    const data = await getOneForm(parseInt(id ?? ""));
+
+    if (data) {
+      const questions = await getQuestions(data.id);
+      data.questions = questions;
       setLoading(false);
-      if (data) {
-        setForm(data);
-        setValues(data.questions?.map((x) => []));
-        setVisibilities(data.questions?.map((x) => true));
-      }
-    });
+      setForm(data);
+      setValues(data.questions?.map((x) => []));
+      setVisibilities(data.questions?.map((x) => true));
+    }
   };
 
   const checkVisible = (q: IQuestion, values: string[][]) => {
@@ -35,12 +39,14 @@ export const Form: FC = () => {
       return true;
     } else {
       const relyQuestionValue = values[q.visibility.questionIndex];
-      if (q.visibility.operatorType === 'eq') {
+      if (q.visibility.operatorType === "eq") {
         if (q.visibility.selectedOptions?.[0] === relyQuestionValue[0]) {
           return true;
         }
       } else {
-        if (arrayContain(relyQuestionValue, q.visibility.selectedOptions ?? [])) {
+        if (
+          arrayContain(relyQuestionValue, q.visibility.selectedOptions ?? [])
+        ) {
           return true;
         }
       }
@@ -60,12 +66,13 @@ export const Form: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values, form?.questions]);
 
-  const filteredQuestions = form?.questions.filter((q, i) => visibilities[i]) ?? [];
+  const filteredQuestions =
+    form?.questions?.filter((q, i) => visibilities[i]) ?? [];
 
   return (
     <Layout title="Form" showBack>
       {loading || !form ? (
-        <div className={classNames('f-cc', style.loading)}>
+        <div className={classNames("f-cc", style.loading)}>
           <Spin size="large" />
         </div>
       ) : (
@@ -81,7 +88,9 @@ export const Form: FC = () => {
                   currentEditIndex={-1}
                   isPublic
                   onInteract={(v) => {
-                    const nextValues = values.map((x, idx) => (idx === q.index ? v : x));
+                    const nextValues = values.map((x, idx) =>
+                      idx === q.index ? v : x
+                    );
                     // find rely questions
                     const relyQuestions = (form?.questions ?? []).filter(
                       (x) => x?.visibility?.questionIndex === q.index
@@ -103,8 +112,9 @@ export const Form: FC = () => {
             <Button
               type="primary"
               onClick={() => {
-                window.alert('Thank you for your time!');
-              }}>
+                window.alert("Thank you for your time!");
+              }}
+            >
               Submit
             </Button>
           </div>

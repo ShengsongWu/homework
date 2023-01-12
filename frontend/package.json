@@ -76,7 +76,7 @@
     "extends": [
       "react-app",
       "react-app/jest",
-      "prettier" 
+      "prettier"
     ]
   },
   "browserslist": {
@@ -150,5 +150,6 @@
   "devDependencies": {
     "eslint-config-prettier": "^8.6.0",
     "prettier": "^2.8.2"
-  }
+  },
+  "proxy": "http://localhost:6000"
 }

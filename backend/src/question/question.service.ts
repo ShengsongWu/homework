@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Question } from './question.entity';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { Question } from "./question.entity";
 
 @Injectable()
 export class QuestionService {
   constructor(
     @InjectRepository(Question)
-    private questionRepository: Repository<Question>,
+    private questionRepository: Repository<Question>
   ) {}
 
   findAll(): Promise<Question[]> {
@@ -16,6 +16,10 @@ export class QuestionService {
 
   findOne(id: number): Promise<Question> {
     return this.questionRepository.findOneBy({ id });
+  }
+
+  findAllByform(formId: number): Promise<Question[]> {
+    return this.questionRepository.findBy({ form: { id: formId } });
   }
 
   async remove(id: string): Promise<void> {

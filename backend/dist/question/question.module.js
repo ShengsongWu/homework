@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const question_entity_1 = require("./question.entity");
 const question_service_1 = require("./question.service");
+const question_controller_1 = require("./question.controller");
 let QuestionModule = class QuestionModule {
 };
 QuestionModule = __decorate([
@@ -18,6 +19,7 @@ QuestionModule = __decorate([
         imports: [typeorm_1.TypeOrmModule.forFeature([question_entity_1.Question])],
         providers: [question_service_1.QuestionService],
         exports: [question_service_1.QuestionService],
+        controllers: [question_controller_1.QuestionController],
     })
 ], QuestionModule);
 exports.QuestionModule = QuestionModule;
