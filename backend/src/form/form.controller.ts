@@ -7,7 +7,7 @@ import {
   Post,
   Put,
 } from "@nestjs/common";
-import { PageResult, success, UniformResponse } from "src/common";
+import { PageResult, success, UniformResponse } from "../common";
 import { FormDto } from "./form.dto";
 import { Form } from "./form.entity";
 import { FormService } from "./form.service";

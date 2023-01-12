@@ -1,5 +1,5 @@
-import { IsNotEmpty } from 'class-validator';
-import { QuestionDto } from 'src/question/question.dto';
+import { IsNotEmpty } from "class-validator";
+import { QuestionDto } from "../question/question.dto";
 
 export class FormDto {
   id?: number;

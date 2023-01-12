@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DataSource, Repository } from "typeorm";
 import { FormDto } from "./form.dto";
 import { Form } from "./form.entity";
-import { QuestionService } from "src/question/question.service";
-import { PageResult } from "src/common";
+import { QuestionService } from "../question/question.service";
+import { PageResult } from "../common";
 
 @Injectable()
 export class FormService {

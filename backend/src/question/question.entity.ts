@@ -1,5 +1,5 @@
-import { Form } from 'src/form/form.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Form } from "../form/form.entity";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 
 @Entity()
 export class Question {
@@ -18,10 +18,10 @@ export class Question {
   @ManyToOne(() => Form, (f) => f.questions)
   form?: Form;
 
-  @Column('json', { nullable: true })
+  @Column("json", { nullable: true })
   visibility?: string;
 
-  @Column('json', { nullable: true })
+  @Column("json", { nullable: true })
   options: string[];
 
   @Column({ nullable: true })

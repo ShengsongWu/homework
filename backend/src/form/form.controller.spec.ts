@@ -3,10 +3,10 @@ import { FormController } from "./form.controller";
 import { FormService } from "./form.service";
 import { getRepositoryToken, TypeOrmModule } from "@nestjs/typeorm";
 import { Form } from "./form.entity";
-import { Question } from "src/question/question.entity";
-import { QuestionModule } from "src/question/question.module";
+import { Question } from "../question/question.entity";
+import { QuestionModule } from "../question/question.module";
 import { Repository, DataSource } from "typeorm";
-import { QuestionService } from "src/question/question.service";
+import { QuestionService } from "../question/question.service";
 
 type MockType<T> = {
   [P in keyof T]?: jest.Mock<{}>;

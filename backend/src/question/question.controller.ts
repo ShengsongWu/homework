@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from "@nestjs/common";
-import { success, UniformResponse } from "src/common";
+import { success, UniformResponse } from "../common";
 
 import { Question } from "./question.entity";
 import { QuestionService } from "./question.service";
