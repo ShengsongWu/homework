@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Form } from './form.entity';
-import { FormService } from './form.service';
-import { FormController } from './form.controller';
-import { QuestionModule } from 'src/question/question.module';
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { Form } from "./form.entity";
+import { FormService } from "./form.service";
+import { FormController } from "./form.controller";
+import { QuestionModule } from "src/question/question.module";
 
 @Module({
   imports: [TypeOrmModule.forFeature([Form]), QuestionModule],
