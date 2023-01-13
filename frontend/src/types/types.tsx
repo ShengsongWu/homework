@@ -9,13 +9,13 @@ export type VisibleType = "always" | "conditional";
 export type CheckboxType = "checked" | "unchecked";
 
 export interface IForm {
-  id: number;
+  id?: number;
   title: string;
   questions: IQuestion[];
 }
 
 export interface IQuestion {
-  id: number;
+  id?: number;
   index: number;
   type: QuestionType;
   title: string;

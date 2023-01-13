@@ -31,7 +31,7 @@ describe("Form", () => {
 
   it(`/GET forms by pagination`, () => {
     return request(app.getHttpServer())
-      .get("/form/page/1/10")
+      .get("/api/form/page/1/10")
       .expect(200)
       .expect({
         statusCode: 200,
@@ -40,7 +40,7 @@ describe("Form", () => {
   });
 
   it(`/GET a form by id`, () => {
-    return request(app.getHttpServer()).get("/form/1").expect(200).expect({
+    return request(app.getHttpServer()).get("/api/form/1").expect(200).expect({
       statusCode: 200,
       data: formService.findOne(),
     });
@@ -48,7 +48,7 @@ describe("Form", () => {
 
   it(`/POST create a form`, () => {
     return request(app.getHttpServer())
-      .post("/form")
+      .post("/api/form")
       .send({
         id: -1,
         title: "sss",
@@ -69,7 +69,7 @@ describe("Form", () => {
 
   it(`/PUT edit a form`, () => {
     return request(app.getHttpServer())
-      .put("/form")
+      .put("/api/form")
       .send({
         id: 6,
         title: "sss",
@@ -89,9 +89,12 @@ describe("Form", () => {
   });
 
   it(`/DELETE a form by id`, () => {
-    return request(app.getHttpServer()).delete("/form/1").expect(200).expect({
-      statusCode: 200,
-    });
+    return request(app.getHttpServer())
+      .delete("/api/form/1")
+      .expect(200)
+      .expect({
+        statusCode: 200,
+      });
   });
 
   afterAll(async () => {

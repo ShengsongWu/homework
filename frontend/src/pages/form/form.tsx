@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useCallback } from "react";
 import { Button, Spin, Form as AntForm } from "antd";
 import { Layout } from "@/components/layout";
 import { useParams } from "react-router-dom";
@@ -20,11 +20,11 @@ export const Form: FC = () => {
   );
   const antForm = AntForm.useForm()[0];
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
     const data = await getOneForm(parseInt(id ?? ""));
 
-    if (data) {
+    if (data?.id) {
       const questions = await getQuestions(data.id);
       data.questions = questions;
       setLoading(false);
@@ -34,7 +34,7 @@ export const Form: FC = () => {
       );
       setVisibilities(data.questions?.map((x) => true));
     }
-  };
+  }, [id]);
 
   const checkVisible = (q: IQuestion, values: string[][]) => {
     if (!q.visibility || !q.visibility.selectedOptions?.length) {
@@ -57,15 +57,17 @@ export const Form: FC = () => {
   };
 
   useEffect(() => {
-    loadData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!form && !loading) {
+      console.log("l");
+
+      loadData();
+    }
+  }, [form, loadData, loading]);
 
   useEffect(() => {
     if (form?.questions?.length) {
       setVisibilities(form?.questions.map((q, i) => checkVisible(q, values)));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values, form?.questions]);
 
   const filteredQuestions =
@@ -87,7 +89,7 @@ export const Form: FC = () => {
                   otherQuestions={form.questions.filter((o) => o.index !== i)}
                   value={q}
                   key={q.index}
-                  currentEditIndex={-1}
+                  currentEditIndex={undefined}
                   isPublic
                   onInteract={(v) => {
                     const nextValues = values.map((x, idx) =>

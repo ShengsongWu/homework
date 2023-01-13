@@ -74,14 +74,16 @@ export const Home: FC = () => {
   ];
 
   const remove = (record: IForm) => {
-    deleteForm(record.id)
-      .then(loadData)
-      .catch(() => {
-        messageApi.open({
-          type: "error",
-          content: "Delete failed",
+    if (record.id !== undefined) {
+      deleteForm(record.id)
+        .then(loadData)
+        .catch(() => {
+          messageApi.open({
+            type: "error",
+            content: "Delete failed",
+          });
         });
-      });
+    }
   };
 
   const edit = (event: React.MouseEvent<any, MouseEvent>, record: IForm) => {

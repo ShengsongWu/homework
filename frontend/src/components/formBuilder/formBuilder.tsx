@@ -23,7 +23,7 @@ export const FormBuilder: FC<IProps> = (props) => {
   const [loadQuestions, setLoadQuestions] = useState(false);
   const [questions, setQuestions] = useState(form?.questions ?? []);
   const [currentEditQuestionIndex, setCurrentEditQuestionIndex] =
-    useState<number>(-1);
+    useState<number>();
   const antForm = Form.useForm()[0];
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export const FormBuilder: FC<IProps> = (props) => {
   }, [props.form, antForm]);
 
   const close = () => {
-    setCurrentEditQuestionIndex(-1);
+    setCurrentEditQuestionIndex(undefined);
     onClose();
   };
 
@@ -59,7 +59,17 @@ export const FormBuilder: FC<IProps> = (props) => {
     if (!title?.trim()?.length) {
       messageApi.open({
         type: "error",
-        content: "Please input title",
+        content: "Please input form title",
+      });
+      return;
+    }
+
+    if (currentEditQuestionIndex !== undefined) {
+      messageApi.open({
+        type: "error",
+        content: `Question ${
+          currentEditQuestionIndex + 1
+        }# has unsubmitted changes, please confirm`,
       });
       return;
     }
@@ -72,9 +82,18 @@ export const FormBuilder: FC<IProps> = (props) => {
       return;
     }
 
+    const emptyTitleIndex = questions.findIndex((q) => q.title.length === 0);
+    if (emptyTitleIndex >= 0) {
+      messageApi.open({
+        type: "error",
+        content: `Please input question ${emptyTitleIndex + 1}# title`,
+      });
+      return;
+    }
+
     setLoading(true);
     const api = form ? updateForm : createForm;
-    const dto = { id: form?.id ?? -1, title: title?.trim() ?? "", questions };
+    const dto = { id: form?.id, title: title?.trim() ?? "", questions };
 
     api(dto)
       .then(() => {
@@ -83,6 +102,7 @@ export const FormBuilder: FC<IProps> = (props) => {
       })
       .catch(() => {
         setLoading(false);
+        setCurrentEditQuestionIndex(undefined);
         messageApi.open({
           type: "error",
           content: "Submit failed",
@@ -144,7 +164,7 @@ export const FormBuilder: FC<IProps> = (props) => {
                     setCurrentEditQuestionIndex(i);
                   }}
                   finishEdit={() => {
-                    setCurrentEditQuestionIndex(-1);
+                    setCurrentEditQuestionIndex(undefined);
                   }}
                   onDelete={(index) => {
                     setQuestions(
@@ -166,7 +186,7 @@ export const FormBuilder: FC<IProps> = (props) => {
               onClick={create}
               style={{ width: "100%" }}
               icon={<PlusOutlined />}
-              disabled={currentEditQuestionIndex !== -1}
+              disabled={currentEditQuestionIndex !== undefined}
             >
               Add Question
             </Button>

@@ -6,7 +6,6 @@ export const classNames: (...args: string[]) => string = (...args) => {
 
 export const createEmptyQuestion: (index: number) => IQuestion = (index) => {
   return {
-    id: -1,
     index,
     type: "checkbox",
     title: "",
@@ -21,10 +20,11 @@ export const createEmptyQuestion: (index: number) => IQuestion = (index) => {
  * @param comparedArray to be compared array
  */
 export const arrayContain = (array: Array<any>, comparedArray: Array<any>) => {
-  array.forEach((a) => {
-    if (!comparedArray.find(a)) {
+  for (let i = 0; i < array.length; i++) {
+    const a = array[i];
+    if (comparedArray.indexOf(a) === -1) {
       return false;
     }
-  });
+  }
   return true;
 };

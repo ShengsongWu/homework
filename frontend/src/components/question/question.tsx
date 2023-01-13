@@ -30,7 +30,7 @@ export const Question: FC<IProps> = (props) => {
     listIndex,
   } = props;
   const [mode, setMode] = useState<QuestionMode>(
-    value.id === -1 ? "edit" : "view"
+    value.id === undefined ? "edit" : "view"
   );
 
   const changeMode = (nextMode: QuestionMode) => {
@@ -56,7 +56,9 @@ export const Question: FC<IProps> = (props) => {
       isPublic={isPublic}
       setMode={changeMode}
       question={value}
-      disabled={value.index !== currentEditIndex && currentEditIndex !== -1}
+      disabled={
+        value.index !== currentEditIndex && currentEditIndex !== undefined
+      }
       onDelete={(i) => {
         onDelete?.(i);
       }}

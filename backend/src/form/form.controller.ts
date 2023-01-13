@@ -14,7 +14,7 @@ import { Form } from "./form.entity";
 import { FormService } from "./form.service";
 
 @ApiTags("forms")
-@Controller("form")
+@Controller("api/form")
 export class FormController {
   constructor(private readonly formService: FormService) {}
 

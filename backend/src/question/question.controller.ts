@@ -5,7 +5,7 @@ import { Question } from "./question.entity";
 import { QuestionService } from "./question.service";
 
 @ApiTags("questions")
-@Controller("question")
+@Controller("api/question")
 export class QuestionController {
   constructor(private readonly questionService: QuestionService) {}
 
