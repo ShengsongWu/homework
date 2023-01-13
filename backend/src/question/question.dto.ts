@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty } from "class-validator";
 
 export class QuestionDto {
   id?: number;
@@ -12,8 +12,7 @@ export class QuestionDto {
   @IsNotEmpty()
   type: string;
 
-  @IsNotEmpty()
-  visibility: string;
+  visibility?: string;
 
-  options: string[];
+  options?: string[];
 }

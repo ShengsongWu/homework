@@ -22,7 +22,7 @@ export class Question {
   visibility?: string;
 
   @Column("json", { nullable: true })
-  options: string[];
+  options?: string[];
 
   @Column({ nullable: true })
   createdAt?: Date;

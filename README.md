@@ -17,6 +17,14 @@ We can click the `delete` button to delete a form.
 
 We can click the table row to open a new page where we can view the form and do some tests. This page first show a title, then questions. We can check a checkbox or select one option from radios. Also we can test one question relies on another one. Many questions can rely on one question. Also, this dependencies can form a chain. If we cancel the topest question's visibilty, all the questions on the chain will be hidden.
 
+### Prerequisite
+
+When I was developing,I used these versions. But I think the latest version is also ok.
+
+- macOS is preferred.
+- Node.js v14.21.2,
+- PostgreSQL 14
+
 ### Running the app manually
 
 Frontend:
@@ -66,8 +74,12 @@ $ npm run test:e2e
 
 ### Documents
 
-Change to backend directory, run `npm run start` and then open Browser, enter `http://localhost:6000/api`.
+Change to backend directory, run `npm run start` and then open Browser, enter `http://localhost:6000/docs`.
 You will see a swagger UI.
+
+### Seed
+
+For testing purpose, run `npm run start` and then open Browser, visit `http://localhost:6000/api/seed` we will create 20 sample forms for your test.
 
 ### ENV
 

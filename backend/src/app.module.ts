@@ -3,12 +3,14 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { FormModule } from "./form/form.module";
+import { SeedModule } from "./seed/seed.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     FormModule,
+    SeedModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
