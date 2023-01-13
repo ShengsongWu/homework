@@ -3,7 +3,7 @@
 ## Technology Architecture
 
 This repo contains frontend and backend. The frontend was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). The backend uses [Nest](https://github.com/nestjs/nest) framework. Both parts are written in Typescript. For database, I use PostgreSQL.
-The frontend listens on port 3000, the backend listens on port 6000. I use nginx to proxy the api requests. I use docker to start our apps.
+The frontend listens on port 3000, the backend listens on port 8000. I use nginx to proxy the api requests. I use docker to start our apps.
 
 ## How to use
 
@@ -74,12 +74,12 @@ $ npm run test:e2e
 
 ### Documents
 
-Change to backend directory, run `npm run start` and then open Browser, enter `http://localhost:6000/docs`.
+Change to backend directory, run `npm run start` and then open Browser, enter `http://localhost:8000/docs`.
 You will see a swagger UI.
 
 ### Seed
 
-For testing purpose, run `npm run start` and then open Browser, visit `http://localhost:6000/api/seed` we will create 20 sample forms for your test.
+For testing purpose, run `npm run start` and then open Browser, visit `http://localhost:8000/api/seed` we will create 20 sample forms for your test.
 
 ### ENV
 
