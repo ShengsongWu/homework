@@ -85,6 +85,7 @@ For testing purpose, run `npm run start` and then open Browser, visit `http://lo
 ### ENV
 
 Backend environments file located on `backend/src/.env`. The current env file is for development purpose. We should replace it for production deployment.
+You must change the `.env` file so that the database config is the same as your local machine.
 
 ### Lint
 
