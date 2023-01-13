@@ -1,10 +1,18 @@
-import React, { FC } from 'react';
-import { Card, Checkbox, Form, Popconfirm, Radio, RadioChangeEvent, Select } from 'antd';
-import { EditOutlined, MinusCircleOutlined } from '@ant-design/icons';
-import style from './question.module.scss';
-import { CHECKBOX_OPTIONS, classNames } from '@/utils';
-import { IQuestion, QuestionMode } from '@/types';
-import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import React, { FC } from "react";
+import {
+  Card,
+  Checkbox,
+  Form,
+  Popconfirm,
+  Radio,
+  RadioChangeEvent,
+  Select,
+} from "antd";
+import { EditOutlined, MinusCircleOutlined } from "@ant-design/icons";
+import style from "./question.module.scss";
+import { CHECKBOX_OPTIONS, classNames } from "@/utils";
+import { IQuestion, QuestionMode } from "@/types";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
 
 interface IProps {
   question: IQuestion;
@@ -24,7 +32,7 @@ export const View: FC<IProps> = (props) => {
     onDelete,
     isPublic,
     onInteract,
-    listIndex
+    listIndex,
   } = props;
 
   const onCheckboxChange = (e: CheckboxChangeEvent) => {
@@ -44,13 +52,13 @@ export const View: FC<IProps> = (props) => {
   };
 
   const renderOption = () => {
-    if (type === 'checkbox') {
+    if (type === "checkbox") {
       return (
-        <Form.Item name="disabled" valuePropName="checked" className={style.options}>
+        <Form.Item valuePropName="checked" className={style.options}>
           <Checkbox disabled={disabled} onChange={onCheckboxChange}></Checkbox>
         </Form.Item>
       );
-    } else if (type === 'radio') {
+    } else if (type === "radio") {
       return (
         <Form.Item className={style.options}>
           <Radio.Group
@@ -78,7 +86,7 @@ export const View: FC<IProps> = (props) => {
   return (
     <div className="f-bs">
       <Card className={style.card} size="small">
-        <div className={classNames('f-bs', style.view)}>
+        <div className={classNames("f-bs", style.view)}>
           <div className={style.index}>{(listIndex ?? index) + 1}#</div>
           <div className={style.body}>
             <div className={style.title}>{title}</div>
@@ -87,12 +95,15 @@ export const View: FC<IProps> = (props) => {
         </div>
       </Card>
       {!isPublic ? (
-        <div className={classNames('fc-sc', style.operation)}>
+        <div className={classNames("fc-sc", style.operation)}>
           <EditOutlined
-            className={classNames(style['operation-button'], disabled ? style['disabled'] : '')}
+            className={classNames(
+              style["operation-button"],
+              disabled ? style["disabled"] : ""
+            )}
             title="Edit"
             onClick={() => {
-              setMode('edit');
+              setMode("edit");
             }}
           />
           <Popconfirm
@@ -103,9 +114,13 @@ export const View: FC<IProps> = (props) => {
             }}
             placement="topRight"
             okText="Yes"
-            cancelText="No">
+            cancelText="No"
+          >
             <MinusCircleOutlined
-              className={classNames(style['operation-button'], disabled ? style['disabled'] : '')}
+              className={classNames(
+                style["operation-button"],
+                disabled ? style["disabled"] : ""
+              )}
               title="Delete"
             />
           </Popconfirm>

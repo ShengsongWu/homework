@@ -41,6 +41,7 @@ export const FormBuilder: FC<IProps> = (props) => {
   }, [props.form, antForm]);
 
   const close = () => {
+    setCurrentEditQuestionIndex(-1);
     onClose();
   };
 
@@ -48,8 +49,10 @@ export const FormBuilder: FC<IProps> = (props) => {
     const index = questions?.length
       ? questions[questions.length - 1].index + 1
       : 0;
+
     const newQuestion = createEmptyQuestion(index);
     setQuestions([...questions, newQuestion]);
+    setCurrentEditQuestionIndex(index);
   };
 
   const onSubmit = () => {
@@ -163,6 +166,7 @@ export const FormBuilder: FC<IProps> = (props) => {
               onClick={create}
               style={{ width: "100%" }}
               icon={<PlusOutlined />}
+              disabled={currentEditQuestionIndex !== -1}
             >
               Add Question
             </Button>

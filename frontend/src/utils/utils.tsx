@@ -1,15 +1,15 @@
-import { IQuestion } from '@/types';
+import { IQuestion } from "@/types";
 
 export const classNames: (...args: string[]) => string = (...args) => {
-  return [...args].join(' ');
+  return [...args].join(" ");
 };
 
 export const createEmptyQuestion: (index: number) => IQuestion = (index) => {
   return {
     id: -1,
     index,
-    type: 'checkbox',
-    title: 'We have created a default title for you, edit it.'
+    type: "checkbox",
+    title: "",
   };
 };
 

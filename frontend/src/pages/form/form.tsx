@@ -29,13 +29,15 @@ export const Form: FC = () => {
       data.questions = questions;
       setLoading(false);
       setForm(data);
-      setValues(data.questions?.map((x) => []));
+      setValues(
+        data.questions?.map((x) => (x.type === "checkbox" ? ["unchecked"] : []))
+      );
       setVisibilities(data.questions?.map((x) => true));
     }
   };
 
   const checkVisible = (q: IQuestion, values: string[][]) => {
-    if (!q.visibility) {
+    if (!q.visibility || !q.visibility.selectedOptions?.length) {
       return true;
     } else {
       const relyQuestionValue = values[q.visibility.questionIndex];

@@ -1,7 +1,7 @@
-import React, { FC, useState } from 'react';
-import { View } from './view';
-import { Edit } from './edit';
-import { IQuestion, QuestionMode } from '@/types';
+import React, { FC, useState } from "react";
+import { View } from "./view";
+import { Edit } from "./edit";
+import { IQuestion, QuestionMode } from "@/types";
 
 interface IProps {
   otherQuestions: IQuestion[];
@@ -27,20 +27,22 @@ export const Question: FC<IProps> = (props) => {
     onChange,
     isPublic,
     onInteract,
-    listIndex
+    listIndex,
   } = props;
-  const [mode, setMode] = useState<QuestionMode>('view');
+  const [mode, setMode] = useState<QuestionMode>(
+    value.id === -1 ? "edit" : "view"
+  );
 
   const changeMode = (nextMode: QuestionMode) => {
-    if (nextMode === 'edit') {
+    if (nextMode === "edit") {
       enterEdit?.();
-    } else if (nextMode === 'view') {
+    } else if (nextMode === "view") {
       finishEdit?.();
     }
     setMode(nextMode);
   };
 
-  return mode === 'edit' ? (
+  return mode === "edit" ? (
     <Edit
       setMode={changeMode}
       question={value}

@@ -19,7 +19,11 @@ export class QuestionService {
   }
 
   findAllByform(formId: number): Promise<Question[]> {
-    return this.questionRepository.findBy({ form: { id: formId } });
+    return this.questionRepository
+      .createQueryBuilder("q")
+      .orderBy("q.index", "ASC")
+      .where({ form: { id: formId } })
+      .getMany();
   }
 
   async remove(id: string): Promise<void> {
