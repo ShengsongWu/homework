@@ -1,0 +1,64 @@
+commands:
+  establish_ssh_auth:
+    description: Establish SSH authenticity
+    steps:
+      - run:
+          name: Establish SSH authenticity
+          working_directory: '~'
+          # This step taken from: https://circleci.com/docs/2.0/gh-bb-integration/#establishing-the-authenticity-of-an-ssh-host
+          command: |
+            mkdir -p ~/.ssh
+    
+            echo 'github.com ssh-rsa 
+            ' >> ~/.ssh/known_hosts
+jobs:
+  tests:
+    docker:
+      - image: cimg/node:14.21.1
+    parameters:
+      file-service:
+        type: string
+        default: backend-apps-glide-file-service
+    resource_class: small
+    steps:
+      - establish_ssh_auth
+      - git-shallow-clone/checkout
+      - run:
+          name: Install dependencies
+          working_directory: '~'
+          command: |
+            ls -l
+            cd backend
+            npm install
+            cd ../frontend
+            npm install
+      - run:
+          name: Backend Test
+          working_directory: '~'
+          command: |
+            cd backend
+            npm run test:cov
+      - run:
+          name: Backend e2e Test
+          working_directory: '~'
+          command: |
+            cd backend
+            npm run test:e2e
+      - run:
+          name: Frontend Test
+          working_directory: '~'
+          command: |
+            cd frontend
+            npm run test
+parameters:
+    is_pr:
+        default: false
+        type: boolean
+orbs:
+  git-shallow-clone: guitarrapc/git-shallow-clone@2.4.1
+version: 2.1
+workflows:
+  tests:
+    when: << pipeline.parameters.is_pr >>
+    jobs:
+      - tests

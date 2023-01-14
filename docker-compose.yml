@@ -1,0 +1,51 @@
+version: "3.5"
+networks:
+  homework:
+    driver: bridge
+services:
+  db:
+    networks:
+      - homework
+    container_name: db
+    image: postgres:latest
+    ports:
+      - "65432:5432"
+    volumes:
+      - pg-data:/data/postgresql
+    restart: always
+    environment:
+      - POSTGRES_DB=homework
+      - POSTGRES_PASSWORD=417000
+      - POSTGRES_USER=postgres
+  homework:
+    ports:
+      - "80:80"
+    security_opt:
+      - seccomp:unconfined
+    hostname: web.localhost
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      homework:
+        aliases:
+          - web.localhost
+    image: web
+    container_name: homework
+    command: bash /docker/start.sh
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ./backend:/code
+      - ./frontend:/frontend
+      - ./docker:/docker
+    environment:
+      - APP_NAME=homework
+      - ENV
+      - DEBUG
+    env_file:
+      - ./backend/.production_env
+    depends_on:
+      - db
+volumes:
+  pg-data:

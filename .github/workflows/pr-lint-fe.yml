@@ -1,0 +1,46 @@
+name: pr-lint-fe
+
+on:
+  push:
+    branches: [development]
+    paths:
+      - 'frontend/**'
+  pull_request:
+    branches: [master, development]
+    paths:
+      - 'frontend/**'
+
+jobs:
+  Lint-Frontend:
+    name: Run eslint scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14.21.2'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Get changed files by action
+        id: changed-files
+        uses: tj-actions/changed-files@v20
+        with:
+          path: frontend
+          files: |
+            frontend/**/*.js
+            frontend/**/*.tsx
+
+      - name: List all changed files (ACMR) https://github.com/tj-actions/changed-files#outputs
+        run: |
+          cd frontend
+          CHANGED_FILES=$(echo "${{ steps.changed-files.outputs.added_files }} ${{ steps.changed-files.outputs.modified_files }}" | xargs -n1 | sed "s/^frontend\///" | xargs)
+          npm run lint $CHANGED_FILES

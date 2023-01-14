@@ -24,6 +24,12 @@ When I was developing,I used these versions. But I think the latest version is a
 - macOS is preferred.
 - Node.js v14.21.2,
 - PostgreSQL 14
+- Docker, Docker Desktop or Colima
+
+### Running the app via Docker
+
+In the project root directory, run `docker-compose up`. After the docker image has been created. Visit `http://localhost`.
+The docker will create two services: PostgreSQL, and web application. The PostgreSQL listens on port 5432. The web application uses deamon process so that it can be restarted if encounters any errors.
 
 ### Running the app manually
 
@@ -84,13 +90,14 @@ For testing purpose, run `npm run start` and then open Browser, visit `http://lo
 
 ### ENV
 
-Backend environments file located on `backend/src/.env`. The current env file is for development purpose. We should replace it for production deployment.
-You must change the `.env` file so that the database config is the same as your local machine.
+Backend environments file located on `backend/.env`. The current env file is for development purpose. We should replace it for production deployment. When we start the application via docker, the backend load the `backend/.production_env` file. For sensitive configs, please inject them into the container environments.
+If you start the application manually, you must change the `.env` file so that the database config is the same as your local machine.
 
 ### Lint
 
 I use the default eslint from the two framework. But for frontend, I add Prettier and more rules which can be changed in package.json.
+Also I use Github actions to check code styles for both frontend and backend.
 
 ### CI
 
-I use CircleCI which also charges, so I didn't do this part.
+I created a simple CI config which runs frontend and backend unit tests and e2e tests. If anyone submit a PR, these checks will run.

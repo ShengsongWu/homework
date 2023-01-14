@@ -1,0 +1,46 @@
+name: pr-lint
+
+on:
+  push:
+    branches: [development]
+    paths:
+      - 'backend/**'
+  pull_request:
+    branches: [master]
+    paths:
+      - 'backend/**'
+
+jobs:
+  Lint-Frontend:
+    name: Run eslint scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14.21.2'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          npm install
+
+      - name: Get changed files by action
+        id: changed-files
+        uses: tj-actions/changed-files@v20
+        with:
+          path: backend
+          files: |
+            backend/**/*.js
+            backend/**/*.jsx
+
+      - name: List all changed files (ACMR) https://github.com/tj-actions/changed-files#outputs
+        run: |
+          cd             backend
+          CHANGED_FILES=$(echo "${{ steps.changed-files.outputs.added_files }} ${{ steps.changed-files.outputs.modified_files }}" | xargs -n1 | sed "s/^backend\///" | xargs)
+          npm run lint $CHANGED_FILES
