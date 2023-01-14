@@ -186,7 +186,9 @@ export const FormBuilder: FC<IProps> = (props) => {
               onClick={create}
               style={{ width: "100%" }}
               icon={<PlusOutlined />}
-              disabled={currentEditQuestionIndex !== undefined}
+              disabled={
+                currentEditQuestionIndex !== undefined || questions.length >= 20
+              }
             >
               Add Question
             </Button>

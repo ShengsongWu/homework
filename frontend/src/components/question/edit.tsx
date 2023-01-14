@@ -135,7 +135,7 @@ export const Edit: FC<IProps> = (props) => {
   };
 
   return (
-    <div className="f-bs">
+    <div className="f-bs" data-testid="edit">
       <Card className={style.card} size="small">
         <div className={classNames("f-bs", style.view)}>
           <div className={style.index}>{index + 1}#</div>

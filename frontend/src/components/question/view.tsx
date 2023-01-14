@@ -84,7 +84,7 @@ export const View: FC<IProps> = (props) => {
     }
   };
   return (
-    <div className="f-bs">
+    <div className="f-bs" data-testid="view">
       <Card className={style.card} size="small">
         <div className={classNames("f-bs", style.view)}>
           <div className={style.index}>{(listIndex ?? index) + 1}#</div>
