@@ -1,15 +1,14 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { FormController } from "./form.controller";
 import { FormService } from "./form.service";
-import { getRepositoryToken, TypeOrmModule } from "@nestjs/typeorm";
+import { getRepositoryToken } from "@nestjs/typeorm";
 import { Form } from "./form.entity";
 import { Question } from "../question/question.entity";
-import { QuestionModule } from "../question/question.module";
 import { Repository, DataSource } from "typeorm";
 import { QuestionService } from "../question/question.service";
 
 type MockType<T> = {
-  [P in keyof T]?: jest.Mock<{}>;
+  [P in keyof T]?: jest.Mock<any>;
 };
 
 const repositoryMockFactory: () => MockType<Repository<any>> = jest.fn(() => ({
@@ -26,9 +25,6 @@ export const dataSourceMockFactory: () => MockType<DataSource> = jest.fn(
 describe("FormController", () => {
   let formController: FormController;
   let formService: FormService;
-  let formRepositoryMock: MockType<Repository<Form>>;
-  let questionRepositoryMock: MockType<Repository<Question>>;
-  let dataSourceMock: MockType<DataSource>;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -51,9 +47,6 @@ describe("FormController", () => {
 
     formController = app.get<FormController>(FormController);
     formService = app.get<FormService>(FormService);
-    formRepositoryMock = app.get(getRepositoryToken(Form));
-    questionRepositoryMock = app.get(getRepositoryToken(Question));
-    dataSourceMock = app.get(DataSource);
   });
 
   describe("list", () => {
