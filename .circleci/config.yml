@@ -40,10 +40,6 @@ jobs:
           command: |
             cd frontend
             npm run test
-parameters:
-  is_pr:
-    default: false
-    type: boolean
 orbs:
   git-shallow-clone: guitarrapc/git-shallow-clone@2.4.1
 version: 2.1
