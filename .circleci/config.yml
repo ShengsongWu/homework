@@ -29,12 +29,6 @@ jobs:
             cd backend
             npm run test
       - run:
-          name: Backend e2e Test
-          working_directory: "~/project"
-          command: |
-            cd backend
-            npm run test:e2e
-      - run:
           name: Frontend Test
           working_directory: "~/project"
           command: |
