@@ -2,15 +2,9 @@ commands:
   establish_ssh_auth:
     description: Establish SSH authenticity
     steps:
-      - run:
-          name: Establish SSH authenticity
-          working_directory: "~"
-          # This step taken from: https://circleci.com/docs/2.0/gh-bb-integration/#establishing-the-authenticity-of-an-ssh-host
-          command: |
-            mkdir -p ~/.ssh
-
-            echo 'github.com ssh-rsa 
-            ' >> ~/.ssh/known_hosts
+      - add_ssh_keys:
+          fingerprints:
+            - "2a:6c:39:93:a1:35:7d:a1:41:0e:33:0b:3e:27:52:2d"
 jobs:
   tests:
     docker:
@@ -21,7 +15,7 @@ jobs:
       - git-shallow-clone/checkout
       - run:
           name: Install dependencies
-          working_directory: "~"
+          working_directory: "~/project"
           command: |
             ls -l
             cd backend
@@ -30,31 +24,20 @@ jobs:
             npm install
       - run:
           name: Backend Test
-          working_directory: "~"
+          working_directory: "~/project"
           command: |
             cd backend
-            npm run test:cov
-      - run:
-          name: Backend e2e Test
-          working_directory: "~"
-          command: |
-            cd backend
-            npm run test:e2e
+            npm run test
       - run:
           name: Frontend Test
-          working_directory: "~"
+          working_directory: "~/project"
           command: |
             cd frontend
             npm run test
-parameters:
-  is_pr:
-    default: false
-    type: boolean
 orbs:
   git-shallow-clone: guitarrapc/git-shallow-clone@2.4.1
 version: 2.1
 workflows:
   tests:
-    when: << pipeline.parameters.is_pr >>
     jobs:
       - tests

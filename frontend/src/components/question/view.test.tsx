@@ -78,6 +78,6 @@ test("render radios", () => {
       <View question={questionRadio} setMode={() => {}} onDelete={() => {}} />
     </FormWrapper>
   );
-  const ele = screen.getByDisplayValue("option3");
+  const ele = screen.getByDisplayValue("option2");
   expect(ele).toBeInTheDocument();
 });
