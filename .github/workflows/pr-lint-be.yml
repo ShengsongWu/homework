@@ -23,6 +23,7 @@ jobs:
       - uses: actions/setup-node@v3
         working-directory: backend
         with:
+          path: frontend
           node-version: "14.21.2"
           cache: "npm"
 
