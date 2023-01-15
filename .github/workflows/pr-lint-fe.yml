@@ -12,6 +12,7 @@ on:
 
 jobs:
   Lint-Frontend:
+    
     name: Run eslint scanning
     runs-on: ubuntu-latest
     steps:
@@ -21,6 +22,7 @@ jobs:
           fetch-depth: 2
 
       - uses: actions/setup-node@v3
+      working-directory: frontend
         with:
           node-version: "14.21.2"
           cache: "npm"

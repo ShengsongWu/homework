@@ -1,4 +1,4 @@
-name: pr-lint
+name: pr-lint-be
 
 on:
   push:
@@ -21,6 +21,7 @@ jobs:
           fetch-depth: 2
 
       - uses: actions/setup-node@v3
+        working-directory: backend
         with:
           node-version: "14.21.2"
           cache: "npm"
