@@ -59,7 +59,7 @@ describe("FormController", () => {
 
       const result = await formController.list(1, 1);
 
-      expect(result.statusCode).toBe(200);
+      expect(result.statusCode).toBe(201);
       expect(result.data.total).toBe(1);
     });
 
