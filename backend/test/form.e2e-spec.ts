@@ -12,9 +12,9 @@ describe("Form", () => {
       total: 1,
     }),
     findOne: () => ({}),
-    create: () => {},
-    edit: () => {},
-    remove: () => {},
+    create: () => ({}),
+    edit: () => ({}),
+    remove: () => ({}),
   };
 
   beforeAll(async () => {
