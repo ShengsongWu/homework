@@ -96,8 +96,9 @@ If you start the application manually, you must change the `.env` file so that t
 ### Lint
 
 I use the default eslint from the two framework. But for frontend, I add Prettier and more rules which can be changed in package.json.
+
 Also I use Github actions to check code styles for both frontend and backend.
 
 ### CI
 
-I created a simple CI config which runs frontend and backend unit tests and e2e tests. If anyone submit a PR, these checks will run.
+I created a simple CI config which runs frontend and backend unit tests. If anyone submit a PR, these checks will run.
