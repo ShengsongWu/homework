@@ -15,7 +15,7 @@ jobs:
       - git-shallow-clone/checkout
       - run:
           name: Install dependencies
-          working_directory: "~"
+          working_directory: "~/project"
           command: |
             ls -l
             cd backend
@@ -24,19 +24,19 @@ jobs:
             npm install
       - run:
           name: Backend Test
-          working_directory: "~"
+          working_directory: "~/project"
           command: |
             cd backend
             npm run test:cov
       - run:
           name: Backend e2e Test
-          working_directory: "~"
+          working_directory: "~/project"
           command: |
             cd backend
             npm run test:e2e
       - run:
           name: Frontend Test
-          working_directory: "~"
+          working_directory: "~/project"
           command: |
             cd frontend
             npm run test
