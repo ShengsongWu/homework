@@ -2,13 +2,13 @@ name: pr-lint-fe
 
 on:
   push:
-    branches: [development]
+    branches: [main]
     paths:
-      - 'frontend/**'
+      - "frontend/**"
   pull_request:
-    branches: [master, development]
+    branches: [main]
     paths:
-      - 'frontend/**'
+      - "frontend/**"
 
 jobs:
   Lint-Frontend:
@@ -22,8 +22,8 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '14.21.2'
-          cache: 'yarn'
+          node-version: "14.21.2"
+          cache: "npm"
 
       - name: Install dependencies
         run: |
@@ -37,6 +37,7 @@ jobs:
           path: frontend
           files: |
             frontend/**/*.js
+            frontend/**/*.ts
             frontend/**/*.tsx
 
       - name: List all changed files (ACMR) https://github.com/tj-actions/changed-files#outputs

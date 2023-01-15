@@ -2,13 +2,13 @@ name: pr-lint
 
 on:
   push:
-    branches: [development]
+    branches: [main]
     paths:
-      - 'backend/**'
+      - "backend/**"
   pull_request:
-    branches: [master]
+    branches: [main]
     paths:
-      - 'backend/**'
+      - "backend/**"
 
 jobs:
   Lint-Frontend:
@@ -22,8 +22,8 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '14.21.2'
-          cache: 'yarn'
+          node-version: "14.21.2"
+          cache: "npm"
 
       - name: Install dependencies
         run: |
@@ -36,8 +36,7 @@ jobs:
         with:
           path: backend
           files: |
-            backend/**/*.js
-            backend/**/*.jsx
+            backend/**/*.ts
 
       - name: List all changed files (ACMR) https://github.com/tj-actions/changed-files#outputs
         run: |
